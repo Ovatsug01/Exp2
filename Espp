@@ -1,56 +1,27 @@
-local Players = game:GetService("Players")
-local localPlayer = Players.LocalPlayer
-local gui = localPlayer:WaitForChild("PlayerGui")
+--cargar bibli
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua
 
--- Função para mostrar ESP dos jogadores
-local function criarESP(player)
-    local esp = Instance.new("BillboardGui")
-    esp.Name = "ESP"
-    esp.Adornee = player.Character
-    esp.Size = UDim2.new(1, 0, 1, 0)
-    esp.StudsOffset = Vector3.new(0, 2, 0)
-    esp.AlwaysOnTop = true
+local Window = Fluent:CreateWindow({
 
-    local label = Instance.new("TextLabel")
-    label.Text = player.Name
-    label.Size = UDim2.new(1, 0, 1, 0)
-    label.TextColor3 = Color3.fromRGB(255, 0, 0)
-    label.BackgroundTransparency = 1
-    label.Parent = esp
+    Title = "Src K1 " .. Fluent.Version,
 
-    esp.Parent = player.Character.Head
-end
+    TabWidth = 160, Size = UDim2.fromOffset(580, 460), Theme = "Dark"
+})
 
--- Função para remover ESP dos jogadores
-local function removerESP(player)
-    if player.Character and player.Character:FindFirstChild("ESP") then
-        player.Character.ESP:Destroy()
-    end
-end
+local Tabs = {
 
--- Função para ativar/desativar ESP
-local espAtivo = false
-local function toggleESP()
-    espAtivo = not espAtivo
-    if espAtivo then
-        for _, player in pairs(Players:GetPlayers()) do
-            if player ~= localPlayer then
-                criarESP(player)
-            end
-        end
-    else
-        for _, player in pairs(Players:GetPlayers()) do
-            if player ~= localPlayer then
-                removerESP(player)
-            end
-        end
-    end
-end
+    Main = Window:AddTab({ Title = "Main" }),
 
--- Adicionando um botão para ativar/desativar ESP
-local botaoESP = Instance.new("TextButton")
-botaoESP.Size = UDim2.new(0, 100, 0, 50)
-botaoESP.Position = UDim2.new(0, 10, 0, 50)
-botaoESP.Text = "Toggle ESP"
-botaoESP.MouseButton1Click:Connect(toggleESP)
-botaoESP.Parent = gui
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+}
+--Paragrafos
+Tabs.Main:AddParagraph({ Title = "Paragraph", Content = "This is a paragraph.\nSecond line!" })
+--botoes
+Tabs.Main:AddButton({ Title = "Button", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Lucasfin000/SpaceHub/main/UESP"))() end })
+
+Window:SelectTab(1)
+
+Fluent:Notify({ Title = "Fluent", Content = "The script has been loaded." })
+
+
+Define a aba selecionada e exibe uma notificação de sucesso.
